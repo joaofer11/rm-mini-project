@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux'
-import { selectPostById } from '../../../../posts-slice'
+import { selectCharacterById } from '../../../../cartoon-data-slice'
 
 import * as S from './styles'
 
-export const CharacterExcerpt = ({ id }) => {
-	const characterData = useSelector(state => selectPostById(state, id))
+export const CharacterItem = ({ id }) => {
+	const characterData = useSelector(state => selectCharacterById(state, id))
 	const {
 		name,
 		image,
@@ -17,13 +17,13 @@ export const CharacterExcerpt = ({ id }) => {
 	console.log(characterData)
 	
 	return (
-		<S.CharacterExcerpt>
+		<S.CharacterItem>
 			<img src={image} alt=""/>
 			<h1>{name}</h1>
 			<span>{gender}</span>
 			<span>{origin.name}</span>
 			<span>{species}</span>
 			<span>{status}</span>
-		</S.CharacterExcerpt>
+		</S.CharacterItem>
 	)
 }

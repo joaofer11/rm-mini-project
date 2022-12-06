@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const CharacterExcerpt = styled.li`
+export const CharacterItem = styled.li`
 	display: flex;
 	flex-direction: column;
 `

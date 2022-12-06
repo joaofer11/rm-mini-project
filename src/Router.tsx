@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Home } from './pages/Home'
-import { Characters } from './features/posts'
+import { Characters } from './features/cartoon-data'
 
 
 export const Router = () => {

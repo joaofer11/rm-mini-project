@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { postsReducer } from '../features/posts/posts-slice'
+import { 
+	cartoonDataReducer,
+} from '../features/cartoon-data/cartoon-data-slice'
 
 
 const rootReducer = combineReducers({
-	posts: postsReducer,
+	cartoonData: cartoonDataReducer,
 })
 
 export const store = configureStore({ reducer: rootReducer })
