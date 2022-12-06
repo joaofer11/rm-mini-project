@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectCharacterById } from '../../../../cartoon-data-slice'
 
@@ -24,6 +25,7 @@ export const CharacterItem = ({ id }) => {
 			<span>{origin.name}</span>
 			<span>{species}</span>
 			<span>{status}</span>
+			<Link to={`character/${id}`}>Show on</Link>
 		</S.CharacterItem>
 	)
 }
