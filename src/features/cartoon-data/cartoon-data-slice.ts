@@ -6,12 +6,9 @@ import {
 import { client } from './api'
 
 
-export const getCharacters = createAsyncThunk('cartoonData/getCharacters', async (pageNumber = 1) => {
-	const data = await client.fetchCharacters(pageNumber)
-	return {
-		items: data.results,
-		pageNumber,
-	}
+export const getCharacters = createAsyncThunk('cartoonData/getCharacters', async (params) => {
+	const data = await client.fetchCharacters(params)
+	return data
 })
 
 const charactersAdapter = createEntityAdapter()

@@ -14,8 +14,6 @@ export const Pagination = () => {
 	const currentPage = useSelector(state => state.cartoonData.currentPage)
 	const dispatch = useDispatch()
 	
-	console.log(currentPage)
-	
 	const diffOfCurrentPageToLastPage = (currentPage + MAX_PAGES_LEFT) - MAX_PAGES
 	
 	const firstPage = (diffOfCurrentPageToLastPage <= 0)
@@ -23,7 +21,7 @@ export const Pagination = () => {
 		: MAX_PAGES - (MAX_PAGES_LEFT * 2)
 	
 	const handlePageChangingClick = pageNumber => () => {
-		dispatch(getCharacters(pageNumber))
+		dispatch(getCharacters({ pageNumber }))
 	}
 	
 	const renderedPages = Array(PAGES_AMOUNT_ON_SCREEN)
