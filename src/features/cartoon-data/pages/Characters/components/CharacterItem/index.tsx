@@ -15,8 +15,6 @@ export const CharacterItem = ({ id }) => {
 		origin,
 	} = characterData
 	
-	console.log(characterData)
-	
 	return (
 		<S.CharacterItem>
 			<img src={image} alt=""/>

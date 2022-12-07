@@ -3,12 +3,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectCharactersIds, getCharacters } from '../../cartoon-data-slice'
 
 import { CharacterItem } from './components/CharacterItem'
+import { Pagination } from './components/Pagination'
 import * as S from './styles'
 
 export const Characters = () => {
 	const charactersStatus = useSelector(state => state.cartoonData.status)
 	const charactersIds = useSelector(selectCharactersIds)
 	const dispatch = useDispatch()
+	
+	console.log(charactersIds)
 	
 	useEffect(() => {
 		if (charactersStatus === 'idle') {
@@ -25,6 +28,7 @@ export const Characters = () => {
 			<S.CharactersList>
 				{renderedCharactersItems}
 			</S.CharactersList>
+			<Pagination />
 		</>
 	)
 }

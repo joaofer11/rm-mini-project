@@ -6,21 +6,30 @@ import {
 import { client } from './api'
 
 
-export const getCharacters = createAsyncThunk('cartoonData/getCharacters', async () => {
-	return client.fetchCharacters()
+export const getCharacters = createAsyncThunk('cartoonData/getCharacters', async (pageNumber = 1) => {
+	const data = await client.fetchCharacters(pageNumber)
+	return {
+		items: data.results,
+		pageNumber,
+	}
 })
 
 const charactersAdapter = createEntityAdapter()
 
 const initialState = charactersAdapter.getInitialState({
-	status: 'idle',
 	error: null,
+	status: 'idle',
+	currentPage: null,
 })
 
 const cartoonDataSlice = createSlice({
 	name: 'cartoonData',
 	initialState,
-	reducers: {},
+	reducers: {
+		switchPage: (state, action) => {
+			state.currentPage = action.payload
+		}
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(getCharacters.pending, state => {
@@ -28,7 +37,8 @@ const cartoonDataSlice = createSlice({
 			})
 			.addCase(getCharacters.fulfilled, (state, action) => {
 				state.status = 'succeeded'
-				charactersAdapter.setAll(state, action.payload.results)
+				state.currentPage = action.payload.pageNumber
+				charactersAdapter.setAll(state, action.payload.items)
 			})
 			.addCase(getCharacters.rejected, (state, action) => {
 				state.status = 'failed'
@@ -36,6 +46,10 @@ const cartoonDataSlice = createSlice({
 			})
 	}
 })
+
+export const { 
+	switchPage: switchPageAct,
+} = cartoonDataSlice.actions
 
 export const {
 	selectIds: selectCharactersIds,
