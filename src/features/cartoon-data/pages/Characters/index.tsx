@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCharactersIds, getCharacters } from '../../cartoon-data-slice'
 
+import { DotsLoading } from '../../../../components/DotsLoading'
 import { SearchCharacter } from './components/SearchCharacter'
 import { CharacterItem } from './components/CharacterItem'
 import { Pagination } from './components/Pagination'
@@ -25,6 +26,7 @@ export const Characters = () => {
 	return (
 		<>
 			<SearchCharacter />
+			{charactersStatus === 'loading' && <DotsLoading />}
 			<S.CharactersList>
 				{renderedCharactersItems}
 			</S.CharactersList>

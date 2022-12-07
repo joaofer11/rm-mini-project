@@ -1,8 +1,17 @@
-import { useDispatch } from 'react-redux'
-import { getCharacters } from '../../../../cartoon-data-slice'
+import { useState, useEffect, useCallback, } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCharactersIds, getCharacters } from '../../../../cartoon-data-slice'
+
+import { DotsLoading } from '../../../../../../components/DotsLoading'
 
 export const SearchCharacter = () => {
+	const [isSearching, setIsSearching] = useState(false)
+	const charactersIds = useSelector(selectCharactersIds)
 	const dispatch = useDispatch()
+	
+	useEffect(() => {
+		setIsSearching(false)
+	}, [charactersIds])
 	
 	const debounce = (fn, delay = 1000) => {
 		let timer = null
@@ -14,8 +23,14 @@ export const SearchCharacter = () => {
 		return trackActions
 	}
 	
+	const getCharactersDelayed = useCallback(
+		debounce((params) => dispatch(getCharacters(params)), 2250),
+		[]
+	)
+	
 	const handleInputChanging = ({ target }) => {
-		dispatch(getCharacters({ characterName: target.value }))
+		setIsSearching(true)
+		getCharactersDelayed({ characterName: target.value })
 	}
 	
 	return (
@@ -24,8 +39,10 @@ export const SearchCharacter = () => {
 			<input 
 				type="text" 
 				id="searchCharacter"
-				onChange={debounce(handleInputChanging, 2250)}
+				onChange={handleInputChanging}
+				style={{ marginBottom: '1.5rem', }}
 			/>
+			{isSearching && <DotsLoading />}
 		</>
 	)
 }
