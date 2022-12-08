@@ -22,6 +22,7 @@ export const Pagination = () => {
 	
 	const handlePageChangingClick = pageNumber => () => {
 		dispatch(getCharacters({ pageNumber }))
+		window.scrollTo(0, 0)
 	}
 	
 	const renderedPages = Array(PAGES_AMOUNT_ON_SCREEN)

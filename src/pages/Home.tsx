@@ -10,7 +10,7 @@ import {
 	Pagination,
 } from '../features/cartoon-data/'
 
-import { DotsLoading } from '../features/ui'
+import { BackToTopButton, DotsLoading } from '../features/ui'
 
 const Main = styled.main`
 	display: flex;
@@ -39,6 +39,7 @@ export const Home = () => {
 	
 	return (
 		<>	
+			<BackToTopButton />
 			{canLoaderAppear && <DotsLoading center />}
 			{fetchedOnce && <SearchCharacter 
 				onInputChanging={handleInputChanging} 
