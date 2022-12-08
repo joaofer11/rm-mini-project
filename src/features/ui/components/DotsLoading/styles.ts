@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 const leap = keyframes`
 	to { transform: translateY(-10px); }
@@ -7,7 +7,15 @@ const leap = keyframes`
 export const Loader = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 0.5rem;
+	
+	${({ center }) => center ? css`
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	` : ''};
 `
 
 export const Dot = styled.span`

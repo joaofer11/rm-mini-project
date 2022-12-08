@@ -1,17 +1,21 @@
-import { useState, useEffect, useCallback, } from 'react'
+import { useState, useEffect, useCallback, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCharactersIds, getCharacters } from '../../../../cartoon-data-slice'
+import { selectCharactersIds, getCharacters } from '../../cartoon-data-slice'
+import styled from 'styled-components'
 
-import { DotsLoading } from '../../../../../../components/DotsLoading'
+import { DotsLoading } from '../../../ui/components/DotsLoading'
 
-export const SearchCharacter = () => {
-	const [isSearching, setIsSearching] = useState(false)
-	const charactersIds = useSelector(selectCharactersIds)
-	const dispatch = useDispatch()
+const SearchCharacterContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.357rem;
 	
-	useEffect(() => {
-		setIsSearching(false)
-	}, [charactersIds])
+	margin: 1.5rem 0 2rem;
+`
+
+export const SearchCharacter = ({ onInputChanging }) => {
+	const dispatch = useDispatch()
 	
 	const debounce = (fn, delay = 1000) => {
 		let timer = null
@@ -29,20 +33,18 @@ export const SearchCharacter = () => {
 	)
 	
 	const handleInputChanging = ({ target }) => {
-		setIsSearching(true)
+		onInputChanging()
 		getCharactersDelayed({ characterName: target.value })
 	}
 	
 	return (
-		<>
+		<SearchCharacterContainer>
 			<label htmlFor="searchCharacter">Search Character</label>
 			<input 
 				type="text" 
 				id="searchCharacter"
 				onChange={handleInputChanging}
-				style={{ marginBottom: '1.5rem', }}
 			/>
-			{isSearching && <DotsLoading />}
-		</>
+		</SearchCharacterContainer>
 	)
 }

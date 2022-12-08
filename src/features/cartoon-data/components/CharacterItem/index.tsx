@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectCharacterById } from '../../../../cartoon-data-slice'
+import { selectCharacterById } from '../../cartoon-data-slice'
 
 import * as S from './styles'
 

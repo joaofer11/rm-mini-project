@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
 export const Pagination = styled.nav`
+	display: flex;
+	justify-content: center;
+	
 	padding: 0.5rem 1rem;
 	
 	> ul {
 		display: flex;
 		gap: 0.5rem;
-		
 		
 		button {
 			display: flex;

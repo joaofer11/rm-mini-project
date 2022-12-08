@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { getCharacters } from '../../../../cartoon-data-slice'
+import { getCharacters } from '../../cartoon-data-slice'
 
 import {
 	MAX_ITEMS,

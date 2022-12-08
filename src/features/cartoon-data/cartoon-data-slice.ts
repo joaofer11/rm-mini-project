@@ -16,6 +16,7 @@ const charactersAdapter = createEntityAdapter()
 const initialState = charactersAdapter.getInitialState({
 	error: null,
 	status: 'idle',
+	fetchedOnce: false,
 	currentPage: null,
 })
 
@@ -33,6 +34,7 @@ const cartoonDataSlice = createSlice({
 				state.status = 'loading'
 			})
 			.addCase(getCharacters.fulfilled, (state, action) => {
+				state.fetchedOnce = true,
 				state.status = 'succeeded'
 				state.currentPage = action.payload.pageNumber
 				charactersAdapter.setAll(state, action.payload.items)
