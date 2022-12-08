@@ -90,6 +90,7 @@ export const BackToTopButton = () => {
 	
 	useEffect(() => {
 		window.addEventListener('scroll', handleWheelDelayed)
+		return () => window.removeEventListener('scroll', handleWheelDelayed)
 	}, [])
 	
 	return (
