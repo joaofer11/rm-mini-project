@@ -1,62 +1,16 @@
 import { useState, useEffect } from 'react'
+import { throttle } from '../../../../common/utils/throttle'
 import * as S from './styles'
-
-/*
-	1. Execute imediatamente a função.
-	
-	2. Espere uma certa quantidade de tempo
-	para executar novamente.
-	
-	3. Nesse tempo de espera, armazene ações pendentes
-	para serem executados no futuro.
-	
-	4. Depois que o tempo de espera expirar,
-	verifique se existe ações pendentes.
-	
-	5.1. Execute a ação pendente se existir, e continue esperando.
-	5.2. Cancele o tempo de espera, e volte ao estado inicial, 
-	se não houver ações pendentes.
-*/
-
 
 export const BackToTopButton = () => {
 	const [canAppearOnScreen, setCanAppearOnScreen] = useState(false)
-	
-	const throttle = (fn, delay = 1000) => {
-		let shouldAwait  = false
-		let pendingArgs = null
-		
-		const pendingActionChecker = () => {
-			const hasPendingAction = pendingArgs !== null
-			
-			if (!hasPendingAction) {
-				shouldAwait = false
-				return
-			}
-			
-			fn(...pendingArgs)
-			pendingArgs = null
-			setTimeout(pendingActionChecker, delay)
-		}
-		
-		return (...args) => {
-			if (shouldAwait) {
-				pendingArgs = args
-				return
-			}
-			
-			fn(...args)
-			shouldAwait = true
-			
-			setTimeout(pendingActionChecker, delay)
-		}
-	}
 	
 	const handleWheel = () => {
 		let startPosScroll = document.documentElement.scrollTop
 		
 		return () => {
 			const currentPosScroll = document.documentElement.scrollTop
+			
 			if (currentPosScroll - startPosScroll < 0 && currentPosScroll >= 650) {
 				setCanAppearOnScreen(true)
 			} else {
