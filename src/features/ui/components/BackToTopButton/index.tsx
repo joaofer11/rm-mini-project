@@ -40,11 +40,11 @@ export const BackToTopButton = () => {
 		requestAnimationFrame(animateScroll)
 	}
 	
-	const handleWheelDelayed = throttle(handleWheel(), 250)
+	const handleScrollDelayed = throttle(handleWheel(), 250)
 	
 	useEffect(() => {
-		window.addEventListener('scroll', handleWheelDelayed)
-		return () => window.removeEventListener('scroll', handleWheelDelayed)
+		window.addEventListener('scroll', handleScrollDelayed)
+		return () => window.removeEventListener('scroll', handleScrollDelayed)
 	}, [])
 	
 	return (

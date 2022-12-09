@@ -38,9 +38,6 @@ const initialState = charactersAdapter.getInitialState<TrackingState>({
 	currentPage: null,
 })
 
-
-
-
 const cartoonDataSlice = createSlice({
 	name: 'cartoonData',
 	initialState,
