@@ -1,6 +1,6 @@
-export const throttle = (callbackFn, delay) => {
+export const throttle = <Params extends []>(callbackFn: Function, delay = 1000) => {
 	let shouldAwait = false
-	let pendingArgs = null
+	let pendingArgs: null | Params = null
 	
 	const checkIfHasPendingArgs = () => {
 		const hasPendingArgs = pendingArgs !== null
@@ -10,12 +10,12 @@ export const throttle = (callbackFn, delay) => {
 			return
 		}
 		
-		callbackFn(...pendingArgs)
+		callbackFn(...pendingArgs as Params)
 		pendingArgs = null
 		setTimeout(checkIfHasPendingArgs, delay)
 	}
 	
-	return (...args) => {
+	return (...args: Params) => {
 		if (shouldAwait) {
 			pendingArgs = args
 			return

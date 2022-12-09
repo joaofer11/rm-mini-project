@@ -1,30 +1,51 @@
 import { 
 	createSlice, 
+	PayloadAction,
 	createAsyncThunk, 
 	createEntityAdapter,
 } from '@reduxjs/toolkit'
-import { client } from './api'
+import { client, FetchCharacters } from './api'
+import type { RootState } from '../../app/store'
 
-
-export const getCharacters = createAsyncThunk('cartoonData/getCharacters', async (params) => {
+export const getCharacters = createAsyncThunk('cartoonData/getCharacters', async (params: FetchCharacters = {} as FetchCharacters) => {
 	const data = await client.fetchCharacters(params)
 	return data
 })
 
-const charactersAdapter = createEntityAdapter()
+interface CharacterData {
+	id: number;
+	name: string;
+	image: string;
+	status: string;
+	gender: string;
+	species: string;
+	origin: { name: string; };
+}
 
-const initialState = charactersAdapter.getInitialState({
+interface TrackingState {
+	error: null | string | undefined;
+	status: 'idle' | 'loading' | 'succeeded' | 'failed';
+	fetchedOnce: boolean;
+	currentPage: null | number
+}
+
+const charactersAdapter = createEntityAdapter<CharacterData>()
+
+const initialState = charactersAdapter.getInitialState<TrackingState>({
 	error: null,
 	status: 'idle',
 	fetchedOnce: false,
 	currentPage: null,
 })
 
+
+
+
 const cartoonDataSlice = createSlice({
 	name: 'cartoonData',
 	initialState,
 	reducers: {
-		switchPage: (state, action) => {
+		switchPage: (state, action: PayloadAction<number>) => {
 			state.currentPage = action.payload
 		}
 	},
@@ -54,5 +75,5 @@ export const {
 	selectIds: selectCharactersIds,
 	selectAll: selectAllCharacters,
 	selectById: selectCharacterById,
-} = charactersAdapter.getSelectors(state => state.cartoonData)
+} = charactersAdapter.getSelectors((state: RootState) => state.cartoonData)
 export const { reducer: cartoonDataReducer } = cartoonDataSlice

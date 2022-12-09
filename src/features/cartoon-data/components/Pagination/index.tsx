@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../../app/store-hooks'
 import { getCharacters } from '../../cartoon-data-slice'
 
 import {
@@ -11,8 +11,8 @@ import {
 import * as S from './styles'
 
 export const Pagination = () => {
-	const currentPage = useSelector(state => state.cartoonData.currentPage)
-	const dispatch = useDispatch()
+	const currentPage = useAppSelector(state => state.cartoonData.currentPage!)
+	const dispatch = useAppDispatch()
 	
 	const diffOfCurrentPageToLastPage = (currentPage + MAX_PAGES_LEFT) - MAX_PAGES
 	
@@ -20,7 +20,7 @@ export const Pagination = () => {
 		? Math.max(currentPage - MAX_PAGES_LEFT, 1)
 		: MAX_PAGES - (MAX_PAGES_LEFT * 2)
 	
-	const handlePageChangingClick = pageNumber => () => {
+	const handlePageChangingClick = (pageNumber: number) => () => {
 		dispatch(getCharacters({ pageNumber }))
 		window.scrollTo(0, 0)
 	}

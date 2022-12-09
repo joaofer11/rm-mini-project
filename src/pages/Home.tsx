@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../app/store-hooks'
 import { getCharacters } from '../features/cartoon-data/cartoon-data-slice'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
@@ -21,9 +21,9 @@ const Main = styled.main`
 
 export const Home = () => {
 	const [isSearching, setIsSearching] = useState(false)
-	const charactersStatus = useSelector(state => state.cartoonData.status)
-	const fetchedOnce = useSelector(state => state.cartoonData.fetchedOnce)
-	const dispatch = useDispatch()
+	const charactersStatus = useAppSelector(state => state.cartoonData.status)
+	const fetchedOnce = useAppSelector(state => state.cartoonData.fetchedOnce)
+	const dispatch = useAppDispatch()
 	
 	const canLoaderAppear = !fetchedOnce && charactersStatus === 'loading'
 	
@@ -41,15 +41,19 @@ export const Home = () => {
 		<>	
 			<BackToTopButton />
 			{canLoaderAppear && <DotsLoading center />}
-			{fetchedOnce && <SearchCharacter 
-				onInputChanging={handleInputChanging} 
-			/>}
+			{fetchedOnce && (
+				<>
+					<SearchCharacter
+						onInputChanging={handleInputChanging}  
+					/>
+					<Main>
+						<CharactersList />
+					</Main>
+					<Pagination />
+				</>
+			)}
 			
 			{isSearching && <DotsLoading />}
-			<Main>
-				<CharactersList />
-			</Main>
-			<Pagination />
 		</>
 	)
 }

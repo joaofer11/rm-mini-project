@@ -4,7 +4,11 @@ const leap = keyframes`
 	to { transform: translateY(-10px); }
 `
 
-export const Loader = styled.div`
+interface LoaderProps {
+	center: boolean;
+}
+
+export const Loader = styled.div<LoaderProps>`
 	display: flex;
 	align-items: center;
 	justify-content: center;

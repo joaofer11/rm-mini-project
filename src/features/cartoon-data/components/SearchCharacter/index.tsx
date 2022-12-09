@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, memo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect, useCallback, memo, ChangeEvent } from 'react'
+import { useAppDispatch } from '../../../../app/store-hooks'
 import { selectCharactersIds, getCharacters } from '../../cartoon-data-slice'
 import styled from 'styled-components'
 
@@ -14,25 +14,28 @@ const SearchCharacterContainer = styled.div`
 	margin: 1.5rem 0 2rem;
 `
 
-export const SearchCharacter = ({ onInputChanging }) => {
-	const dispatch = useDispatch()
+interface SearchCharacterProps {
+	onInputChanging: () => void
+}
+
+export const SearchCharacter = ({ onInputChanging }: SearchCharacterProps) => {
+	const dispatch = useAppDispatch()
 	
-	const debounce = (fn, delay = 1000) => {
-		let timer = null
+	const debounce = (
+		fn: (params: { characterName: string }) => void, delay = 1000
+	) => {
+		let timer: ReturnType<typeof setTimeout>
 		
-		const trackActions = (...args) => {
+		return (...args: [{ characterName: string }]) => {
 			clearTimeout(timer)
 			timer = setTimeout(() => fn(...args), delay)
 		}
-		return trackActions
 	}
 	
 	const getCharactersDelayed = useCallback(
-		debounce((params) => dispatch(getCharacters(params)), 2250),
-		[]
-	)
+		debounce((params) => dispatch(getCharacters(params)), 2250), [])
 	
-	const handleInputChanging = ({ target }) => {
+	const handleInputChanging = ({ target }: ChangeEvent<HTMLInputElement>) => {
 		onInputChanging()
 		getCharactersDelayed({ characterName: target.value })
 	}

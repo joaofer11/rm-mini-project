@@ -1,8 +1,12 @@
 import * as S from './styles'
 
-export const DotsLoading = ({ center }) => {
+interface DotsLoadingProps {
+	center?: boolean
+}
+
+export const DotsLoading = ({ center }: DotsLoadingProps) => {
 	return (
-	<S.Loader center={center}>
+	<S.Loader center={center ?? false}>
 		<S.Dot></S.Dot>
 		<S.Dot></S.Dot>
 		<S.Dot></S.Dot>

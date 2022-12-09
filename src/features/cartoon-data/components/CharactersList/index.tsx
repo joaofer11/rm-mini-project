@@ -8,7 +8,7 @@ export const CharactersList = () => {
 	const charactersIds = useSelector(selectCharactersIds)
 	
 	const renderedCharactersList = charactersIds.map(id => (
-		<CharacterItem key={id} id={id} />
+		<CharacterItem key={id} id={id as number} />
 	))
 	
 	return (

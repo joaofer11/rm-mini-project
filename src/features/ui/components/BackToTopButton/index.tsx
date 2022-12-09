@@ -22,12 +22,12 @@ export const BackToTopButton = () => {
 	
 	const handleClickedButton = () => {
 		const duration = 500
-		let startTime = null
+		let startTime: null | number = null
 		
-		const animateScroll = timestamp => {
+		const animateScroll = (timestamp: number) => {
 			if (!startTime) startTime = timestamp
 			
-			const diffOfMsPassed = timestamp - startTime
+			const diffOfMsPassed = timestamp - startTime!
 			const progessInPercent = diffOfMsPassed / duration
 			const currentPosScroll = document.documentElement.scrollTop
 			

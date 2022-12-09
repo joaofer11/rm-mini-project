@@ -3,7 +3,12 @@ const BASE_URL = axios.create({
 	baseURL: 'https://rickandmortyapi.com/api'
 })
 
-const fetchCharacters = async (params = {}) => {
+export interface FetchCharacters {
+	pageNumber?: number,
+	characterName?: string,
+}
+
+const fetchCharacters = async (params: FetchCharacters = {}) => {
 	const { pageNumber, characterName } = params
 	
 	const response = await BASE_URL.get('/character', {

@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../../../app/store-hooks'
 import { selectCharacterById, selectCharactersIds } from '../../cartoon-data-slice'
 
 import * as S from './styles'
 
 export const SingleCharacter = () => {
 	const { characterId } = useParams()
-	const characterData = useSelector((state) => selectCharacterById(state, Number(characterId)))
+	const characterData = useAppSelector((state) => selectCharacterById(state, Number(characterId)))
 	
 	const {
 		name,
@@ -15,7 +15,7 @@ export const SingleCharacter = () => {
 		gender,
 		status,
 		origin,
-	} = characterData
+	} = characterData!
 	
 	return (
 		<S.Character>
