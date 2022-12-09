@@ -46,6 +46,7 @@ export const Home = () => {
 					<SearchCharacter
 						onInputChanging={handleInputChanging}  
 					/>
+					{isSearching && <DotsLoading />}
 					<Main>
 						<CharactersList />
 					</Main>
@@ -53,7 +54,6 @@ export const Home = () => {
 				</>
 			)}
 			
-			{isSearching && <DotsLoading />}
 		</>
 	)
 }
